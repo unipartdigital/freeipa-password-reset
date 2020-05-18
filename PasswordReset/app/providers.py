@@ -150,7 +150,7 @@ class Signal():
             except KeyError:    # user dict may or may not include the values we're searching. Thanks FreeIPA!
                 pass
             else:
-                phones.append(found_num)
+                phones.append(found_num[0])
         phones = self.__filter_phones(phones)
         try:
             for phone in phones:
