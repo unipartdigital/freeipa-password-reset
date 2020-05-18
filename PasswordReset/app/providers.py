@@ -125,10 +125,10 @@ class Signal():
     def __init__(self, options):
         self.msg_template = options['msg_template']
         self.sender_number = options['sender_number']
-        if 'ldap_attribute_name' in options:
-            self.ldap_attribute_name = options['ldap_attribute_name']
+        if 'ldap_attribute_names' in options:
+            self.ldap_attribute_names = options['ldap_attribute_names']
         else:
-            self.ldap_attribute_name = 'telephonenumber'
+            self.ldap_attribute_names = ['telephonenumber', 'mobile']
 
     def __filter_phones(self, phones):
         phone_regexp = re.compile('^\+([\d]{9,15})$')
@@ -143,7 +143,12 @@ class Signal():
         return valid_phones
 
     def send_token(self, user, token):
-        phones = user['result'][self.ldap_attribute_name]
+        phones = []
+        for attrib in self.ldap_attribute_names:
+            try:
+                phones.append(user['result'][attrib])
+            except KeyError:    # user dict may or may not include the values we're searching. Thanks FreeIPA!
+                pass
         phones = self.__filter_phones(phones)
         try:
             for phone in phones:
