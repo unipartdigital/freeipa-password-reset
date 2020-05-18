@@ -136,7 +136,7 @@ class Signal():
         if len(phones) == 0:
             raise SignalValidateFailed("User does not have phone numbers")
         for phone in phones:
-            phone = re.sub('[^0-9\+]+', '', phone.replace("(0)", ""))
+            phone = re.sub('[^0-9\+]+', '', phone.replace("(0", ""))
             if valid_regexp.match(phone) is not None:
                 valid_phones.append(phone)
         if len(valid_phones) == 0:
