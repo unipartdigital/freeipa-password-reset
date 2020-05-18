@@ -131,12 +131,14 @@ class Signal():
             self.ldap_attribute_names = ['telephonenumber', 'mobile']
 
     def __filter_phones(self, phones):
-        phone_regexp = re.compile('^\+([\d]{9,15})$')
+        valid_regexp = re.compile('^\+([\d]{9,15})$')
         valid_phones = []
         if len(phones) == 0:
             raise SignalValidateFailed("User does not have phone numbers")
         for phone in phones:
-            if phone_regexp.match(phone) is not None:
+            phone = phone.replace("(0)", "")
+            phone = re.sub('[^0-9\+]+', '', phone)
+            if valid_regexp.match(phone) is not None:
                 valid_phones.append(phone)
         if len(valid_phones) == 0:
             raise SignalValidateFailed("User does not have valid phone numbers")
