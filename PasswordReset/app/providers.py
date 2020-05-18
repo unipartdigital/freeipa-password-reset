@@ -147,7 +147,7 @@ class Signal():
         for attrib in self.ldap_attribute_names:
             try:
                 found_num = user['result'][attrib]
-            except e as KeyError:    # user dict may or may not include the values we're searching. Thanks FreeIPA!
+            except KeyError:    # user dict may or may not include the values we're searching. Thanks FreeIPA!
                 pass
             else:
                 phones.append(found_num)
