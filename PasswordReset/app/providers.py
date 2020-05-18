@@ -143,14 +143,14 @@ class Signal():
         return valid_phones
 
     def send_token(self, user, token):
-        phones = []
+        phones = set()
         for attrib in self.ldap_attribute_names:
             try:
                 found_num = user['result'][attrib]
             except KeyError:    # user dict may or may not include the values we're searching. Thanks FreeIPA!
                 pass
             else:
-                phones.append(found_num[0])
+                phones.add(found_num[0])
         phones = self.__filter_phones(phones)
         try:
             for phone in phones:
