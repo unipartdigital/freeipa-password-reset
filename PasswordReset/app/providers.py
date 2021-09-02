@@ -108,9 +108,10 @@ class Email():
     def send_token(self, user, token):
         recipients = user['result']['mail']
         recipients = self.__filter_emails(recipients)
+        uid = user['result']['uid']
 
         try:
-            msg = MIMEText(self.msg_template.format(token))
+            msg = MIMEText(self.msg_template.format(token, uid))
             msg['Subject'] = self.msg_subject
             msg['From'] = self.smtp_from
             msg['To'] = ", ".join(recipients)
