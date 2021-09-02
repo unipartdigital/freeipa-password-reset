@@ -108,7 +108,7 @@ class Email():
     def send_token(self, user, token):
         recipients = user['result']['mail']
         recipients = self.__filter_emails(recipients)
-        uid = user['result']['uid']
+        uid = user['result']['uid'][0]
 
         try:
             msg = MIMEText(self.msg_template.format(token, uid))
