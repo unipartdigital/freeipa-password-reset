@@ -15,7 +15,9 @@ def index(request):
 
     context = {
         'providers': get_providers(),
-        }
+        'home': settings.HOME,
+        'prefid': settings.PREFIX
+    }
     return HttpResponse(template.render(context, request))
 
 class GetToken(View):
@@ -31,7 +33,7 @@ class GetToken(View):
             }
             return HttpResponse(template.render(context, request), status=500)
         else:
-            return redirect("/reset/setpassword/?uid={0}".format(request.POST['uid']))
+            return redirect("{0}/setpassword/?uid={1}".format(settings.PREFIX, request.POST['uid']))
 
 
 class SetPassword(View):
@@ -39,6 +41,7 @@ class SetPassword(View):
         template = loader.get_template('setpassword.html')
         context = {
             'uid': request.GET['uid'],
+            'home': settings.HOME
         }
         return HttpResponse(template.render(context, request))
     
@@ -51,13 +54,15 @@ class SetPassword(View):
                 'msg': e,
                 'error': True,
                 'uid': request.POST['uid'],
+                'home': settings.HOME
             }
             return HttpResponse(template.render(context, request), status=500)
         else:
             template = loader.get_template('setpassword.html')
             context = {
-                'msg': mark_safe('Password successfully changed. <a href="/ipa/ui/">You can login here.</a>'),
+                'msg': mark_safe('Password successfully changed. <a href="{0}">You can login here.</a>'.format(settings.HOME)),
                 'error': False,
                 'uid': request.POST['uid'],
+                'home': settings.HOME
             }
             return HttpResponse(template.render(context, request))
