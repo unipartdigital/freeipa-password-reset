@@ -1,3 +1,4 @@
+{% extends 'base.html' %} {% block content %}
 {% if host %}
 <script>
    if (location.host !== '{{host}}') {
@@ -5,7 +6,6 @@
    }
 </script>
 {% endif %}
-{% extends 'base.html' %} {% block content %}
 <div id="container" class="app-container" style="display: none;">
    <nav class="navbar navbar-default navbar-pf" role="navigation">
       <div class="navbar-header"><button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-21"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand"
