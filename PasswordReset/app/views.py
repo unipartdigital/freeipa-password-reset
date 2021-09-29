@@ -16,7 +16,8 @@ def index(request):
     context = {
         'providers': get_providers(),
         'home': settings.HOME,
-        'prefid': settings.PREFIX
+        'prefix': settings.PREFIX,
+        'host': settings.HOST
     }
     return HttpResponse(template.render(context, request))
 
